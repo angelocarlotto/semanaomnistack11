@@ -10,6 +10,7 @@ routes.post('/sessions',SessionController.create);
 
 routes.post('/ongs',OngController.create);
 routes.get('/ongs',OngController.index);
+routes.delete('/ongs/:id',OngController.delete);
 
 routes.post('/incidents',IncidentController.create);
 routes.get('/incidents',IncidentController.index);
