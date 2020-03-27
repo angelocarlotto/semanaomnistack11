@@ -28,21 +28,27 @@ export default function Incidents(){
             }
 
             setLoading(true);
-            const response = await api.get('incidents',{params:{page}});
 
-            setIncidents([... incidents, ... response.data]);
+            try {
+                const response = await api.get('incidents',{params:{page}});
 
-           
-            console.log("total1:",total)
-            console.log("totalCarregado1:",totalCarregado)
-            
-            setTotalCarregado(incidents.length);
-            setTotal(response.headers['x-total-count']);
-
-            console.log("total2:",total)
-            console.log("totalCarregado2:",totalCarregado)
-
-            setPage(page+1);
+                setIncidents([... incidents, ... response.data]);
+    
+               
+                console.log("total1:",total)
+                console.log("totalCarregado1:",totalCarregado)
+                
+                setTotalCarregado(incidents.length);
+                setTotal(response.headers['x-total-count']);
+    
+                console.log("total2:",total)
+                console.log("totalCarregado2:",totalCarregado)
+    
+                setPage(page+1);
+            } catch (error) {
+                
+            }
+          
             setLoading(false);
 
             console.log("fim loadIncidents")
@@ -53,15 +59,20 @@ export default function Incidents(){
         if(loading){
             return;
         }
-            
-        setLoading(true);
 
-        const response = await api.get('incidents');
+        try{
+            setLoading(true);
 
-        setIncidents( response.data);
-        setTotalCarregado(response.data.length);
-        setTotal(response.headers['x-total-count']);
-        setPage(2);
+            const response = await api.get('incidents');
+    
+            setIncidents( response.data);
+            setTotalCarregado(response.data.length);
+            setTotal(response.headers['x-total-count']);
+            setPage(2);
+        }catch(e){
+
+        }
+       
         setLoading(false);
 
        console.log("fim refreshIncidents")
