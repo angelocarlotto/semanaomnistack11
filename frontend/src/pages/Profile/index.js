@@ -1,26 +1,24 @@
 import React,{useEffect, useState} from 'react';
 import {Link,useHistory} from 'react-router-dom'
-import {FiPower, FiTrash2} from 'react-icons/fi'
+import {FiPower, FiTrash2,FiEdit2} from 'react-icons/fi'
 
 import api from '../../services/api'
 import './styles.css'
 import logoImg from '../../assets/logo.svg'
 export default function Profile(){
         const history=useHistory();
-const [incidents,setInccidents]=useState([]);
+        const [incidents,setIncidents]=useState([]);
         const ongName=localStorage.getItem('ongName');
         const ongId=localStorage.getItem('ongId');
+
         useEffect(()=>{
-                api.get('profile',{
-                        headers:{
-                                Authorization:ongId
-                        }
-                }).then(response=>{
-                        setInccidents(response.data)
+                api.get('profile',{headers:{Authorization:ongId}})
+                .then(response=>{
+                        setIncidents(response.data)
                 })
         },[ongId]);
 
-       async  function handleDeleteIncidente(id){
+        async  function handleDeleteIncidente(id){
                 try {
                         await api.delete(`incidents/${id}`,{
                                 headers:{
@@ -28,7 +26,15 @@ const [incidents,setInccidents]=useState([]);
                                 }
                         })
 
-                        setInccidents(incidents.filter(e=>e.id!==id))
+                        setIncidents(incidents.filter(e=>e.id!==id))
+                } catch (error) {
+                        alert('erro ao deletar caso, tente novamente')
+                }
+        }
+
+        async  function handleEditIncidente(id){
+                try {
+
                 } catch (error) {
                         alert('erro ao deletar caso, tente novamente')
                 }
@@ -73,10 +79,12 @@ const [incidents,setInccidents]=useState([]);
                                 </p>
 
                                 <button onClick={()=>handleDeleteIncidente(incident.id)} type="button">
-
                                         <FiTrash2 size={20} color="#a8a8b3"></FiTrash2>
-
                                 </button>
+                                <Link className="button" to="/incidents/edit">
+                                        <FiEdit2 size={20} color="#a8a8b3"></FiEdit2>
+                                        Editar
+                                </Link>
                                 </li>
             ))}
             </ul>

@@ -4,6 +4,7 @@ const OngController=require('./controllers/OngController');
 const IncidentController=require('./controllers/IncidentController');
 const ProfileController=require('./controllers/ProfileController');
 const SessionController=require('./controllers/SessionController');
+const IncidentHeroController=require('./controllers/IncidentHeroController');
 const routes = express.Router();
 
 routes.post('/sessions',SessionController.create);
@@ -12,9 +13,14 @@ routes.post('/ongs',OngController.create);
 routes.get('/ongs',OngController.index);
 routes.delete('/ongs/:id',OngController.delete);
 
+routes.put('/incidents/:id',IncidentController.update);
 routes.post('/incidents',IncidentController.create);
 routes.get('/incidents',IncidentController.index);
 routes.delete('/incidents/:id',IncidentController.delete);
+routes.get('/incidents/:id',IncidentController.get);
+
+routes.post('/incidenthero',IncidentHeroController.create);
+routes.delete('/incidenthero/:id',IncidentHeroController.delete);
 
 routes.get('/profile',ProfileController.index);
 module.exports=routes;

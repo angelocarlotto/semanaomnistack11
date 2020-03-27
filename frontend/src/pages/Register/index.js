@@ -15,20 +15,16 @@ export default function Register(){
 
     const history=useHistory();
     async function handleRegister(e){
-
         e.preventDefault();
-
         const data={name,email,whatsapp,city,uf};   
-
         try{
-       const response=await  api.post('ongs',data);
-     
-           alert(`cadastro realizado com sucesso: ${response.data.id}`);
-           history.push('/');
+            const response=await  api.post('ongs',data);
+            alert(`cadastro realizado com sucesso: ${response.data.id}`);
+            history.push('/');
         }catch(e){
             alert(`erro`)
         }
-        }
+    }
 
     return (
       
